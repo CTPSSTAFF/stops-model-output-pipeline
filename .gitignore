@@ -28,7 +28,6 @@ Thumbs.db
 *.xls
 *.xlsx
 *.db
-*.sqlite
 *.h5
 *.parquet
 

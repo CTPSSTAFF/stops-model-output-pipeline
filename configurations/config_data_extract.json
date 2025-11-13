@@ -1,8 +1,4 @@
 {
-  "run_flags": {
-    "CONDUCT_DATA_EXTRACTION": false,
-    "_detail": "This flag is to be set to false if data extraction is already completed and only report generation is needed."
-  },
   "prn_files_folderpath": "stops_prn_files",
   "output_base_folder": "extracted_csv_tables",
   "prn_table_format_structure_configfile": "configurations/prn_table_format_structure.json",
@@ -14,9 +10,9 @@
       "Y2024",
       "Y2045",
       "Y2050",
-      "se2019-skim1-type0",
-      "se2019-skim2-type0",
-      "se2024-skim2-type0"
+      "brstops-v0.1-run-type0",
+      "brstops-v0.3-run-type0",
+      "brstops-v0.3-run-type12"
   ],
   "files_to_convert":[
     {

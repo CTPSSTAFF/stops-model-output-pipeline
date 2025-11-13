@@ -1,37 +1,37 @@
 [
     {
-        "alias": "Y2024",
+        "_alias": "Y2024",
                 "filename": "A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA_STOPSY2024Results.prn",
                 "is_full_folderpath": false
     },
     {
-        "alias": "Y2045",
+        "_alias": "Y2045",
                 "filename": "A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA50-CATA-MWRTA-BATA-MVRTA#MBTA50-CATA-MWRTA-BATA-MVRTA_STOPSY2045Results.prn",
                 "is_full_folderpath": false
     },
     {
-        "alias": "Y2050",
+        "_alias": "Y2050",
                 "filename": "A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA50-CATA-MWRTA-BATA-MVRTA#MBTA50-CATA-MWRTA-BATA-MVRTA_STOPSY2050Results.prn",
                 "is_full_folderpath": false
     },
     {
-        "alias": "example",
+        "_alias": "example",
                 "filename": "C:\\dev\\br-stops_dev\\Scripts\\stops_prn_files\\example.prn",
                 "is_full_folderpath": true
     },
     {
-        "alias": "se2019-skim1-type0",
-                "filename": "J:\\Shared drives\\TMD_TSA\\Projects\\STOPS\\Scenarios\\ModelVersion-0.2-UpdateScenarios\\Scenario Reports\\Reports--brstops_skims_1_type0\\brstops_skims_1_type0.prn",
+        "alias": "brstops-v0.1-run-type0",
+                "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\v0.1_20250628\\Completed Runs\\brstops-tdm23.1skims-type0-2024gtfs\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA_STOPSY2024Results.prn",
                 "is_full_folderpath": true
     },
     {
-        "alias": "se2019-skim2-type0",
-                "filename": "J:\\Shared drives\\TMD_TSA\\Projects\\STOPS\\Scenarios\\ModelVersion-0.2-UpdateScenarios\\Scenario Reports\\Reports--brstops_skims_2_type0_SE2019\\brstops_skims_2_type0_SE2019.prn",
+        "_alias": "brstops-v0.3-run-type0",
+                "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\v0.3_20250905\\Completed Runs\\brstops-type0-2024-results\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA_STOPSY2024Results.prn",
                 "is_full_folderpath": true
     },
     {
-        "alias": "se2024-skim2-type0",
-                "filename": "J:\\Shared drives\\TMD_TSA\\Projects\\STOPS\\Scenarios\\ModelVersion-0.2-UpdateScenarios\\Scenario Reports\\Reports--brstops_skims_2_type0_SE2024\\brstops_skims_2_type0_SE2024.prn",
+        "alias": "brstops-v0.3-run-type12",
+                "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\v0.3_20250905\\Completed Runs\\brstops-type12-2024-results\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA_STOPSY2024Results.prn",
                 "is_full_folderpath": true
     }
 ]

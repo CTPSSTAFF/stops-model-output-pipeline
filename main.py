@@ -2,8 +2,7 @@ import sys
 from pathlib import Path
 import shutil
 from configurations.config_manager import ConfigManager
-from util.extractor import run_extraction
-from util.reporter import run_reporting
+from extractor import run_extraction
 
 
 def clear_and_create_folder(folder_path: Path):
@@ -38,39 +37,22 @@ def main():
 
     print("--------------------------------------------------")
     
-    # --- Step 1: Data Extraction ---
-    if extraction_config and extraction_config.get("run_flags", {}).get("CONDUCT_DATA_EXTRACTION", False):
-        try:
-            # Initialize folder for a clean extraction run
-            extraction_output_folder = Path(extraction_config.get("output_base_folder", "extracted_csv_tables"))
-            clear_and_create_folder(extraction_output_folder)
-            
-            # Run the extraction process
-            run_extraction(extraction_config)
-        except Exception as e:
-            print(f"\n❌ FATAL ERROR during Data Extraction: {e}")
-            import traceback
-            traceback.print_exc()
-            sys.exit(1)
+    # Run Data Extraction
+    try:
+        # Initialize folder for a clean extraction run
+        extraction_output_folder = Path(extraction_config.get("output_base_folder", "extracted_csv_tables"))
+        clear_and_create_folder(extraction_output_folder)
+        
+        # Run the extraction process
+        run_extraction(extraction_config)
+    except Exception as e:
+        print(f"\n❌ FATAL ERROR during Data Extraction: {e}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+
     else:
         print("\nSkipping Data Extraction as per config.")
-
-    # --- Step 2: Report Generation ---
-    if reporting_config and reporting_config.get("run_flags", {}).get("CONDUCT_REPORT_GENERATION", False):
-        try:
-            # Initialize folder for a clean reporting run
-            report_output_folder = Path(reporting_config.get("report_output_folderpath", "reporting_data"))
-            clear_and_create_folder(report_output_folder)
-
-            # Run the reporting process
-            run_reporting(config_manager)
-        except Exception as e:
-            print(f"\n❌ FATAL ERROR during Report Generation: {e}")
-            import traceback
-            traceback.print_exc()
-            sys.exit(1)
-    else:
-        print("\nSkipping Report Generation as per config.")
 
     print("\n🎉 Pipeline finished successfully!")
     print("--------------------------------------------------")
