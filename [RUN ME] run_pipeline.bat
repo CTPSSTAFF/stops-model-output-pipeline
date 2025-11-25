@@ -53,7 +53,7 @@ IF "%DEBUG_MODE%"=="1" (
     IF ERRORLEVEL 2 GOTO :EOF
     IF ERRORLEVEL 1 GOTO :START_PIPELINE
 ) ELSE (
-    REM In standard (non-debug) mode, pause so the user can see the final status.
+    REM In standard (non-debug) mode, pause.
     ECHO.
     PAUSE
 )

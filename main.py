@@ -5,9 +5,7 @@ import shutil
 from extractor import run_extraction 
 
 class ConfigManager:
-    """
-    Loads JSON configuration files for the pipeline.
-    """
+    """ Loads JSON configuration files for the pipeline. """
     _EXTRACTION_CONFIG_PATH = Path("config_data_extract.json")
     _TABLES_TO_EXTRACT_PATH = Path("config_data_tables.json")
     _PRN_TABLES_STRUCT_PATH = Path("prn_tables_struct.json")
@@ -36,9 +34,7 @@ class ConfigManager:
             sys.exit(1)
 
     def load_config_jsons(self):
-        """
-        Loads all configuration files and hydrates them into a single object.
-        """
+        """ Loads all configuration files into a single object. """
         print("--- ⚙️ Loading Configurations ---")
         
         self.config = self._load_json_file(self.extraction_config_path, "Extraction config")
@@ -71,7 +67,7 @@ class ConfigManager:
         return self.config
 
 def clear_and_create_folder(folder_path: Path):
-
+    
     print(f"Initializing folder: '{folder_path}'")
     if folder_path.exists() and folder_path.is_dir():
         print(f"   - Deleting existing folder...")
@@ -82,9 +78,8 @@ def clear_and_create_folder(folder_path: Path):
     print("   - Folder ready.")
 
 def main():
-    """
-    Prepares and runs extractor.
-    """
+    """ Prepares and runs extractor. """
+
     print("Starting the data processing pipeline...")
     print(f"Running {Path(__file__).name}")
     print("--------------------------------------------------")
