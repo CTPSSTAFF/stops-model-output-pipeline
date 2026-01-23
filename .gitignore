@@ -15,8 +15,6 @@ __pycache__/
 env/
 venv/
 ENV/
-_archives_to_delete_when_ready/
-custom_report_exports/
 
 # OS files
 .DS_Store
@@ -51,4 +49,6 @@ build/
 *.sav
 *.zip
 *.tar.gz
+
+# Specific project files
 stops_input_files/STOPSStations.dbf
