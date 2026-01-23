@@ -5,22 +5,52 @@ import os
 import json
 import sqlite3
 from pathlib import Path
+from simpledbf import Dbf5
+
+def _convert_dbf_files(config):
+    files_to_convert_config = config.get("files_to_convert")
+    if not files_to_convert_config:
+        return
+
+    print("\n--- Starting DBF to CSV Conversion ---")
+
+    for item in files_to_convert_config:
+        for task_name, paths in item.items():
+            try:
+                in_path_str = paths.get("in_file_path")
+                out_path_str = paths.get("out_file_name")
+
+                if not in_path_str or not out_path_str:
+                    continue
+
+                in_path = Path(in_path_str)
+                out_path = Path(out_path_str)
+
+                if not in_path.exists():
+                    print(f"ERROR: Input file not found: {in_path}")
+                    continue
+
+                out_path.parent.mkdir(parents=True, exist_ok=True)
+
+                dbf_data = Dbf5(str(in_path))
+                df = dbf_data.to_dataframe()
+
+                df.to_csv(out_path, index=False, encoding='utf-8')
+                print(f"Saved DBF conversion: {out_path}")
+
+            except Exception as e:
+                print(f"Error converting {task_name}: {e}")
+
+    print("--- DBF Conversion Complete ---\n")
 
 class StopsPRNExtractor:
 
     @staticmethod
     def _get_table_format_config(config):
-        """ Retrieves the pre-loaded table structures configs. """
-
-        structures = config.get("prn_table_structures")
-        if not structures:
-            print("ERROR: 'prn_table_structures' key not found in config object.")
-            return {}
-        return structures
+        return config.get("prn_table_structures", {})
 
     @staticmethod
     def _generate_colspecs_from_widths(widths):
-        """Generates (start, end) tuples from a list of widths."""
         colspecs = []
         start = 0
         for width in widths:
@@ -31,7 +61,6 @@ class StopsPRNExtractor:
 
     @staticmethod
     def _extract_metadata_from_prn(lines, start_index):
-        """Extracts metadata (Program, Version, Run) from lines above a table."""
         metadata = {}
         for meta_line_offset in range(1, 10):
             meta_line_num = start_index - meta_line_offset
@@ -60,7 +89,6 @@ class StopsPRNExtractor:
 
     @staticmethod
     def _extract_table_9_01_from_prn(file_path, table_id, config):
-        """Extractor for Table 9.01."""
         metadata = {}
         actual_data_lines = []
         in_table_section = False
@@ -91,8 +119,7 @@ class StopsPRNExtractor:
             names = [col["name"] for col in columns_def]
             widths = [col["width"] for col in columns_def]
             colspecs = StopsPRNExtractor._generate_colspecs_from_widths(widths)
-        except (KeyError, TypeError, AttributeError) as e:
-            print(f"ERROR: Invalid 'columns' format for Table {table_id} in config: {e}")
+        except (KeyError, TypeError, AttributeError):
             return pd.DataFrame(), metadata
         
         for line_to_collect in lines[start_of_table_data:]:
@@ -123,7 +150,6 @@ class StopsPRNExtractor:
     
     @staticmethod
     def _extract_table_10_01_from_prn(file_path, table_id, config):
-        """Extractor for Table 10.01."""
         metadata = {}
         actual_data_lines = []
         in_table_section = False
@@ -155,8 +181,7 @@ class StopsPRNExtractor:
             names = [col["name"] for col in columns_def]
             widths = [col["width"] for col in columns_def]
             colspecs = StopsPRNExtractor._generate_colspecs_from_widths(widths)
-        except (KeyError, TypeError, AttributeError) as e:
-            print(f"ERROR: Invalid 'columns' format for Table {table_id} in config: {e}")
+        except (KeyError, TypeError, AttributeError):
             return pd.DataFrame(), metadata
         
         for line_to_collect in lines[start_of_table_data:]:
@@ -187,7 +212,6 @@ class StopsPRNExtractor:
 
     @staticmethod
     def _extract_table_10_02_from_prn(file_path, table_id, config):
-        """Extractor for Table 10.02."""
         metadata = {}
         all_data_text = []
         in_table_section = False
@@ -219,8 +243,7 @@ class StopsPRNExtractor:
             names = [col["name"] for col in columns_def]
             widths = [col["width"] for col in columns_def]
             colspecs = StopsPRNExtractor._generate_colspecs_from_widths(widths)
-        except (KeyError, TypeError, AttributeError) as e:
-            print(f"ERROR: Invalid 'columns' format for Table {table_id} in config: {e}")
+        except (KeyError, TypeError, AttributeError):
             return pd.DataFrame(), metadata
 
         for line in lines[start_of_data:]:
@@ -261,7 +284,6 @@ class StopsPRNExtractor:
     
     @staticmethod
     def _extract_table_10_03_04_from_prn(file_path, table_id, config):
-        """Extractor for Tables 10.03 & 10.04."""
         metadata = {}
         actual_data_lines = []
         in_table_section = False
@@ -293,8 +315,7 @@ class StopsPRNExtractor:
             names = [col["name"] for col in columns_def]
             widths = [col["width"] for col in columns_def]
             colspecs = StopsPRNExtractor._generate_colspecs_from_widths(widths)
-        except (KeyError, TypeError, AttributeError) as e:
-            print(f"ERROR: Invalid 'columns' format for Table {table_id} in config: {e}")
+        except (KeyError, TypeError, AttributeError):
             return pd.DataFrame(), metadata
         
         for line_to_collect in lines[start_of_table_data:]:
@@ -327,7 +348,6 @@ class StopsPRNExtractor:
 
     @staticmethod
     def _extract_table_10_05_from_prn(file_path, table_id, config):
-        """Extractor for Table 10.05."""
         metadata = {}
         actual_data_lines = []
         in_table_section = False
@@ -359,8 +379,7 @@ class StopsPRNExtractor:
             names = [col["name"] for col in columns_def]
             widths = [col["width"] for col in columns_def]
             colspecs = StopsPRNExtractor._generate_colspecs_from_widths(widths)
-        except (KeyError, TypeError, AttributeError) as e:
-            print(f"ERROR: Invalid 'columns' format for Table {table_id} in config: {e}")
+        except (KeyError, TypeError, AttributeError):
             return pd.DataFrame(), metadata
         
         for line_to_collect in lines[start_of_table_data:]:
@@ -391,7 +410,6 @@ class StopsPRNExtractor:
     
     @staticmethod
     def _extract_table_12_01_from_prn(file_path, table_id, config):
-        """Extractor for Table 12.01."""
         metadata = {}
         actual_data_lines = []
         in_table_section = False
@@ -421,8 +439,7 @@ class StopsPRNExtractor:
             names = [col["name"] for col in columns_def]
             widths = [col["width"] for col in columns_def]
             colspecs = StopsPRNExtractor._generate_colspecs_from_widths(widths)
-        except (KeyError, TypeError, AttributeError) as e:
-            print(f"ERROR: Invalid 'columns' format for Table {table_id} in config: {e}")
+        except (KeyError, TypeError, AttributeError):
             return pd.DataFrame(), metadata
         
         for line_to_collect in lines[start_of_table_data:]:
@@ -451,7 +468,6 @@ class StopsPRNExtractor:
 
     @staticmethod
     def _extract_table_11_XX_from_prn(file_path, table_id, config):
-        """Extractor for Table 11.XX variants."""
         metadata = {}
         data_text = []
         in_table_section = False
@@ -483,7 +499,6 @@ class StopsPRNExtractor:
         table_format = format_config.get(table_id)
 
         if not table_format or table_format.get("format_type") != "fixed_width":
-            print(f"WARNING: No fixed_width format definition found for Table {table_id}. Skipping.")
             return pd.DataFrame(), metadata
         
         try:
@@ -491,8 +506,7 @@ class StopsPRNExtractor:
             names = [col["name"] for col in columns_def]
             widths = [col["width"] for col in columns_def]
             colspecs = StopsPRNExtractor._generate_colspecs_from_widths(widths)
-        except (KeyError, TypeError, AttributeError) as e:
-            print(f"ERROR: Invalid fixed_width format definition for Table {table_id} in config: {e}")
+        except (KeyError, TypeError, AttributeError):
             return pd.DataFrame(), metadata
 
         for line in lines[start_of_data:]:
@@ -524,7 +538,6 @@ class StopsPRNExtractor:
 
     @staticmethod
     def _extract_district_table(file_path, table_id, config):
-        """Extractor for matrix-style 'District' tables."""
         metadata = {}
         data_lines = []
         in_table_section = False
@@ -549,7 +562,6 @@ class StopsPRNExtractor:
                 break
         
         if start_of_data == -1 or header_line is None:
-            print(f"           - WARNING: Could not find a valid header row for Table {table_id}. Skipping.")
             return pd.DataFrame(), metadata
 
         headers = header_line.strip().split()
@@ -578,7 +590,6 @@ class StopsPRNExtractor:
 
         num_data_cols = len(parsed_rows[0])
         if len(headers) < num_data_cols:
-             print(f"           - WARNING: Mismatch in Table {table_id}. Header has {len(headers)} columns, data has {num_data_cols}. Truncating.")
              parsed_rows = [row[:len(headers)] for row in parsed_rows]
              num_data_cols = len(headers)
 
@@ -592,8 +603,6 @@ class StopsPRNExtractor:
 
     @staticmethod
     def _extract_station_group_table(file_path, table_id, config):
-        """Extractor for 'Station Group' table formats."""
-        
         metadata = {}
         in_table_section = False
         header_line_list = []
@@ -676,7 +685,6 @@ class StopsPRNExtractor:
         num_cols_header = len(final_headers)
         
         if num_cols_data != num_cols_header:
-            print(f"           - WARNING: Column count mismatch in Table {table_id}. Data has {num_cols_data}, Header has {num_cols_header}. Adjusting.")
             min_cols = min(num_cols_data, num_cols_header)
             df = df.iloc[:, :min_cols]
             df.columns = final_headers[:min_cols]
@@ -692,122 +700,108 @@ class StopsPRNExtractor:
         return df, metadata
 
 def get_extraction_method(table_id_str, config):
-    """
-    Gets the correct extraction function (e.g., _extract_table_9_01_from_prn)
-    """
     format_config = StopsPRNExtractor._get_table_format_config(config)
     table_format = format_config.get(table_id_str)
 
     if not table_format:
-        print(f"WARNING: No configuration found for Table {table_id_str}.")
         return None
 
     function_name = table_format.get("extraction_function")
     if not function_name:
-        print(f"WARNING: 'extraction_function' not specified for Table {table_id_str} in config.")
         return None
 
     try:
         extraction_func = getattr(StopsPRNExtractor, function_name)
         return extraction_func
     except AttributeError:
-        print(f"ERROR: The function '{function_name}' specified for Table {table_id_str} does not exist.")
         return None
 
-
 def run_extraction(config):
-    """ Data extraction logic. """
+    print("--- Starting Data Extraction ---")
+    
+    if "files_to_convert" in config:
+        _convert_dbf_files(config)
 
-    print("--- 🎬 Starting Data Extraction ---")
-    
     output_base_dir = Path(config.get("output_base_folder", "pipeline_outputs"))
-    output_db_name = config.get("output_db_name", "extraction_output.db")
-    
     output_base_dir.mkdir(parents=True, exist_ok=True)
-    db_path = output_base_dir / output_db_name
-    
+
+    db_name = config.get("output_db_name", "consolidated_results.db")
+    db_path = output_base_dir / db_name
     db_conn = None
-    cleared_prn_tables = set()
 
     try:
         db_conn = sqlite3.connect(db_path)
-        print(f"--- 💾 Opened SQLite database connection at: {db_path} ---")
-        
-        print("\n--- 📠 Starting PRN to SQLite Extraction ---")
-        
-        tables_to_extract_config = config.get("tables_to_extract", [])
-        aliases_to_extract_config = config.get("aliases_to_extract")
-        
-        if not aliases_to_extract_config or not isinstance(aliases_to_extract_config, list) or len(aliases_to_extract_config) == 0:
-            print("❗️ WARNING: 'aliases_to_extract' key is missing or empty. Halting PRN extraction.")
+        print(f"--- Database initialized: {db_path} ---")
+        print("\n--- Starting PRN to CSV/DB Extraction ---")
+
+        structures = config.get("prn_table_structures", {})
+        if not structures:
+            print("No table structures found. Cannot proceed.")
             return
 
-        files_to_process_nested = aliases_to_extract_config[0]
-        
+        scenarios_to_extract_config = config.get("scenarios_to_extract")
+        if not scenarios_to_extract_config or not isinstance(scenarios_to_extract_config, list) or len(scenarios_to_extract_config) == 0:
+            print("Config missing 'scenarios_to_extract'.")
+            return
+
+        files_to_process_nested = scenarios_to_extract_config[0]
         if not files_to_process_nested or not isinstance(files_to_process_nested, list):
-            print("❗️ WARNING: No file definitions found inside 'aliases_to_extract'. Halting PRN extraction.")
             return
         
-        # Filter out commented-out entries (those with "_alias")
-        files_to_process = [f for f in files_to_process_nested if "alias" in f and "filename" in f]
+        files_to_process = [f for f in files_to_process_nested if "scenario" in f and "filename" in f]
         
         if not files_to_process:
-            print("❗️ WARNING: No valid files to process. Halting PRN extraction.")
+            print("No valid Scenarios.")
             return
         
-        print(f"ℹ️  Will process {len(files_to_process)} PRN files defined in 'aliases_to_extract'.")
-        
-        if not tables_to_extract_config:
-            print("❗️ WARNING: No 'tables_to_extract' defined in config. Halting PRN extraction.")
-            return
+        print(f"Number of Scenarios: {len(files_to_process)}")
         
         for file_info in files_to_process:
-            alias = file_info["alias"]
+            scenario = file_info["scenario"]
             filename = file_info["filename"]
-            
             file_path = Path(filename)
 
             if not file_path.exists():
-                print(f"❗️ WARNING: File not found for alias '{alias}': {file_path}. Skipping.")
+                print(f"Skipping missing file: {filename}")
                 continue
                 
-            print(f"\nProcessing File: '{file_path.name}' (Alias: '{alias}')")
+            scenario_output_dir = output_base_dir / scenario
+            scenario_output_dir.mkdir(parents=True, exist_ok=True)
 
-            for output_config in tables_to_extract_config:
-                table_id_str = output_config['table_id']
-                print(f"   -> Attempting to extract Table {table_id_str}...")
-                
+            print(f"\nProcessing File: '{file_path.name}' -> {scenario_output_dir}")
+
+            for table_id_str in structures.keys():
                 extraction_func = get_extraction_method(table_id_str, config)
                 
                 if not extraction_func:
-                    print(f"                         - No extraction method found for Table {table_id_str}. Skipping.")
                     continue
 
                 df, metadata = extraction_func(str(file_path), table_id_str, config)
                 
                 if df.empty:
-                    print(f"                         - No data found for Table {table_id_str} in this file.")
                     continue
 
-                default_table_name = f"Table_{table_id_str.replace('.', '_')}"
-                table_name = output_config.get("output_subfolder", default_table_name)
-
-                write_mode = 'append'
-                if table_name not in cleared_prn_tables:
-                    write_mode = 'replace'
-                    cleared_prn_tables.add(table_name)
-
-                df.insert(0, 'scenario_alias', alias)
+                df.insert(0, 'scenario_scenario', scenario)
                 
-                df.to_sql(table_name, db_conn, if_exists=write_mode, index=False)
-                print(f"                         ✅ Wrote data to table: '{table_name}' (Mode: {write_mode})")
+                clean_table_id = table_id_str.replace('.', '_')
+                table_name = f"Table_{clean_table_id}"
 
-    except sqlite3.Error as e:
-        print(f"❌ DATABASE ERROR: {e}")
+                csv_filename = f"{table_name}.csv"
+                output_csv_path = scenario_output_dir / csv_filename
+                try:
+                    df.to_csv(output_csv_path, index=False, encoding='utf-8')
+                    print(f"    Saved CSV: {csv_filename}")
+                except Exception as e:
+                    print(f"    Error saving CSV {csv_filename}: {e}")
+
+                try:
+                    df.to_sql(table_name, db_conn, if_exists='append', index=False)
+                except Exception as e:
+                    print(f"    Error writing to DB table {table_name}: {e}")
+
     except Exception as e:
-        print(f"❌ A general error occurred: {e}")
+        print(f"General Error: {e}")
     finally:
         if db_conn:
-            db_conn.commit()
             db_conn.close()
-            print(f"\n--- ✅ Data Extraction Complete. Database connection closed. ---")
+            print(f"\n--- Extraction Complete ---")

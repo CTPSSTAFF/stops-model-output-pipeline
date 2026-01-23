@@ -1,18 +1,30 @@
 {
-  "output_base_folder": "pipeline_outputs",
-  "aliases_to_extract": [
+  "output_base_folder": "outputs",
+  "scenarios_to_extract": [
     [
       {
-          "alias": "brstops-v0.1-run-type0",
-          "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\v0.1_20250628\\Completed Runs\\brstops-tdm23.1skims-type0-2024gtfs\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA_STOPSY2024Results.prn"
+          "scenario": "brstops-20261216-2024ctl-2024year",
+          "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\BRSTOPS_2024BaseYear_20251216\\2024_20251216_fullrun\\Group Calibration Type 12 Run\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA_STOPSY2024Results.prn"
       },
       {
-          "alias": "brstops-v0.3-run-type0",
-          "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\v0.3_20250905\\Completed Runs\\brstops-type0-2024-results\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA_STOPSY2024Results.prn"
+          "scenario": "brstops-20261216-2024ctl-2045year",
+          "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\BRSTOPS_2024BaseYear_20251216\\2024_20251216_fullrun\\Group Calibration Type 12 Run\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA_STOPSY2045Results.prn"
       },
       {
-          "alias": "brstops-v0.3-run-type12",
-          "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\v0.3_20250905\\Completed Runs\\brstops-type12-2024-results\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA_STOPSY2024Results.prn"
+          "scenario": "brstops-20261216-2024ctl-2050year",
+          "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\BRSTOPS_2024BaseYear_20251216\\2024_20251216_fullrun\\Group Calibration Type 12 Run\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA#MBTA-CATA-MWRTA-BATA-MVRTA_STOPSY2050Results.prn"
+      },
+      {
+          "scenario": "brstops-20261216-2050ctl-2024year",
+          "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\BRSTOPS_2024BaseYear_20251216\\2024_20251216_fullrun\\Group Calibration Type 12 Run\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA50-CATA-MWRTA-BATA-MVRTA#MBTA50-CATA-MWRTA-BATA-MVRTA_STOPSY2024Results.prn"
+      },
+      {
+          "scenario": "brstops-20261216-2050ctl-2045year",
+          "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\BRSTOPS_2024BaseYear_20251216\\2024_20251216_fullrun\\Group Calibration Type 12 Run\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA50-CATA-MWRTA-BATA-MVRTA#MBTA50-CATA-MWRTA-BATA-MVRTA_STOPSY2045Results.prn"
+      },
+      {
+          "scenario": "brstops-20261216-2050ctl-2050year",
+          "filename": "J:\\Shared drives\\TMD_TSA\\BRSTOPS\\Model Scenarios\\BRSTOPS_2024BaseYear_20251216\\2024_20251216_fullrun\\Group Calibration Type 12 Run\\Reports\\A2_MBTA-CATA-MWRTA-BATA-MVRTA#MBTA50-CATA-MWRTA-BATA-MVRTA#MBTA50-CATA-MWRTA-BATA-MVRTA_STOPSY2050Results.prn"
       }
     ]
   ]

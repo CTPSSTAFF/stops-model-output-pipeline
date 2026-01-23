@@ -8,7 +8,7 @@ class ConfigManager:
     """ Loads JSON configuration files for the pipeline. """
     _EXTRACTION_CONFIG_PATH = Path("config_data_extract.json")
     _TABLES_TO_EXTRACT_PATH = Path("config_data_tables.json")
-    _PRN_TABLES_STRUCT_PATH = Path("prn_tables_struct.json")
+    _PRN_TABLES_STRUCT_PATH = Path("prn_tables.json")
 
     def __init__(self):
         """Initializes the config paths."""
@@ -90,7 +90,7 @@ def main():
     print("--------------------------------------------------")
     
     try:
-        output_folder = Path(extraction_config.get("output_base_folder", "pipeline_outputs"))
+        output_folder = Path(extraction_config.get("output_base_folder", "outputs"))
         clear_and_create_folder(output_folder)
         
         run_extraction(extraction_config)
