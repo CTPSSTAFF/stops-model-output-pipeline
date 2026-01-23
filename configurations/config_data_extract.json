@@ -12,7 +12,9 @@
       "Y2050",
       "brstops-v0.1-run-type0",
       "brstops-v0.3-run-type0",
-      "brstops-v0.3-run-type12"
+      "brstops-v0.3-run-type12",
+      "STOPSY2050Results",
+      "STOPSY2024Results"
   ],
   "files_to_convert":[
     {

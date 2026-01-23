@@ -266,6 +266,7 @@
   },
   { "table_id": "2.04", "format_type": "Station Group", "extraction_function": "_extract_station_group_table" },
   { "table_id": "2.05", "format_type": "Station Group", "extraction_function": "_extract_station_group_table" },
+  { "table_id": "3.03", "format_type": "Station Group", "extraction_function": "_extract_station_group_table" },
   { "table_id": "4.01", "format_type": "District", "extraction_function": "_extract_district_table" },
   { "table_id": "6.01", "format_type": "District", "extraction_function": "_extract_district_table" },
   { "table_id": "13.01", "format_type": "District", "extraction_function": "_extract_district_table" },
