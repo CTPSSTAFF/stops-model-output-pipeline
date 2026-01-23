@@ -1,6 +1,7 @@
 [
   { "table_id": "2.04", "output_subfolder": "Table_2_04", "output_filename_template": "[{alias}]__2_04.csv" },
   { "table_id": "2.05", "output_subfolder": "Table_2_05", "output_filename_template": "[{alias}]__2_05.csv" },
+  { "table_id": "3.03", "output_subfolder": "Table_3_03", "output_filename_template": "[{alias}]__3_03.csv" },
   { "table_id": "4.01", "output_subfolder": "Table_4_01", "output_filename_template": "[{alias}]__4_01.csv" },
   { "table_id": "6.01", "output_subfolder": "Table_6_01", "output_filename_template": "[{alias}]__6_01.csv" },
   { "table_id": "9.01", "output_subfolder": "Table_9_01", "output_filename_template": "[{alias}]__9_01.csv" },
