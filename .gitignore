@@ -52,3 +52,4 @@ build/
 
 # Specific project files
 stops_input_files/STOPSStations.dbf
+debug_log.txt
